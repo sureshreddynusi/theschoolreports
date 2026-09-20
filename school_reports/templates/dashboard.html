@@ -1,0 +1,386 @@
+{% extends 'base.html' %}
+
+{% block title %}The School Reports{% endblock %}
+
+{% block content %}
+<div class="page-shell">
+    <header class="topbar">
+        <h1>The School Reports</h1>
+    </header>
+
+    <nav class="report-tabs" aria-label="School reports tabs">
+        <button class="tab active" type="button" data-tab="student">Student Report</button>
+        <button class="tab" type="button" data-tab="teacher">Teacher Report</button>
+        <button class="tab" type="button" data-tab="correspondent">Correspondent Report</button>
+    </nav>
+
+    <section class="report-panel" id="student-panel">
+        <h2>Student Report</h2>
+
+        <div class="selector-row">
+            <label for="student-select">Select Student:</label>
+            <div class="select-wrap">
+                <select id="student-select" aria-label="Select student">
+                    <option>Aisha</option>
+                    <option>Ibrahim</option>
+                    <option>Nora</option>
+                </select>
+            </div>
+            <button class="primary-btn generate-btn" type="button" data-type="student">Generate Report</button>
+        </div>
+
+        <div class="report-body">
+            <div class="profile">
+                <p><strong>Student:</strong> <span id="student-name">Aisha</span></p>
+                <p>Class: <span id="student-class">8A</span></p>
+                <p>Attendance: <span id="student-attendance">92%</span></p>
+                <p>Accuracy: <span id="student-accuracy">78%</span></p>
+                <p>Extracurricular: <span id="student-extracurricular">Football (Grade A)</span></p>
+            </div>
+
+            <div class="mini-card">
+                <div class="card-title">Gap Attribution</div>
+                <p class="chart-note">Difference between 100% and exam accuracy.</p>
+                <div class="donut-wrap">
+                    <div class="donut" id="student-gap-donut" aria-label="Student gap attribution">
+                        <div class="label" id="student-gap-label">41.7%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-card">
+                <div class="card-title">Attendance</div>
+                <p class="chart-note">Percentage of school days attended.</p>
+                <div class="donut-wrap">
+                    <div class="donut" id="student-attendance-donut" aria-label="Student attendance">
+                        <div class="label" id="student-attendance-label">92%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="summary" id="student-summary">Aisha has shown consistent attendance and steady improvement in her studies and extracurricular activities.</p>
+
+        <div class="download-row">
+            <button class="secondary-btn download-report-btn" type="button" data-report-type="student">Download PDF Report</button>
+        </div>
+    </section>
+
+    <section class="report-panel hidden" id="teacher-panel">
+        <h2>Teacher Report</h2>
+
+        <div class="selector-row">
+            <label for="teacher-select">Select Teacher:</label>
+            <div class="select-wrap">
+                <select id="teacher-select" aria-label="Select teacher">
+                    <option>Mrs. Iyer</option>
+                    <option>Mr. Patel</option>
+                    <option>Ms. Lewis</option>
+                </select>
+            </div>
+            <button class="primary-btn generate-btn" type="button" data-type="teacher">Generate Report</button>
+        </div>
+
+        <div class="report-body">
+            <div class="profile">
+                <p><strong>Teacher:</strong> <span id="teacher-name">Mrs. Iyer</span></p>
+                <p>Subject: <span id="teacher-subject">Science</span></p>
+                <p>Overall Accuracy: <span id="teacher-accuracy">82%</span></p>
+            </div>
+
+            <div class="mini-card">
+                <div class="card-title">Subject Accuracy</div>
+                <p class="chart-note">Marks earned in this teacher's subject.</p>
+                <div class="donut-wrap">
+                    <div class="donut" id="teacher-accuracy-donut" aria-label="Teacher subject accuracy">
+                        <div class="label" id="teacher-accuracy-label">50%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-card hidden" id="teacher-attendance-card">
+                <div class="card-title">Attendance</div>
+                <p class="chart-note">Teacher attendance from the workbook.</p>
+                <div class="donut-wrap">
+                    <div class="donut" id="teacher-attendance-donut" aria-label="Teacher attendance">
+                        <div class="label" id="teacher-attendance-label">0%</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <p class="summary" id="teacher-summary">Strong results in Class 8A, while Class 8C needs improvement.</p>
+
+        <div class="download-row">
+            <button class="secondary-btn download-report-btn" type="button" data-report-type="teacher">Download PDF Report</button>
+        </div>
+    </section>
+
+    <section class="report-panel hidden" id="correspondent-panel">
+        <h2>Correspondent Report</h2>
+
+        <div class="metric-tray">
+            <div class="metric-box">
+                <div class="metric-icon">◌</div>
+                <div class="metric-content">
+                    <div class="metric-label">Overall Attendance</div>
+                    <div class="metric-value" id="overall-attendance-value">88%</div>
+                </div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-icon">◎</div>
+                <div class="metric-content">
+                    <div class="metric-label">Overall Accuracy</div>
+                    <div class="metric-value" id="overall-accuracy-value">81%</div>
+                </div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-icon">⚙</div>
+                <div class="metric-content">
+                    <div class="metric-label">Students below 70%</div>
+                    <div class="metric-value" id="system-gaps-value">12</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="correspondent-grid">
+            <div class="chart-block">
+                <h3>Class Performance</h3>
+                <p class="chart-note">Average exam accuracy for each class.</p>
+                <div class="mini-bars" aria-label="Class performance chart">
+                    <div class="bar-col">
+                        <div class="bar-stack">
+                            <div class="bar green" id="class-bar-1" style="height: 79%;"></div>
+                        </div>
+                        <div class="bar-value" id="class-bar-label-1">8A</div>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-stack">
+                            <div class="bar orange" id="class-bar-2" style="height: 79%;"></div>
+                        </div>
+                        <div class="bar-value" id="class-bar-label-2">8B</div>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-stack">
+                            <div class="bar green" id="class-bar-3" style="height: 79%;"></div>
+                        </div>
+                        <div class="bar-value" id="class-bar-label-3">8C</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-block">
+                <h3>Subject Accuracy</h3>
+                <p class="chart-note">Average marks earned for each subject.</p>
+                <div class="mini-bars" aria-label="Subject accuracy chart">
+                    <div class="bar-col">
+                        <div class="bar-stack">
+                            <div class="bar green" id="subject-bar-1" style="height: 81%;"></div>
+                        </div>
+                        <div class="bar-value" id="subject-bar-label-1">Math</div>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-stack">
+                            <div class="bar green" id="subject-bar-2" style="height: 82%;"></div>
+                        </div>
+                        <div class="bar-value" id="subject-bar-label-2">Science</div>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar-stack">
+                            <div class="bar orange" id="subject-bar-3" style="height: 75%;"></div>
+                        </div>
+                        <div class="bar-value" id="subject-bar-label-3">English</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="teacher-agenda">
+            <span class="pill" id="teacher-gaps-pill">Teachers below 70%: 7</span>
+            <span class="pill" id="student-gaps-pill">Students below 70%: 9</span>
+        </div>
+
+        <p class="summary" id="school-summary-text">Overall strong academics with focus needed in Social Science.</p>
+
+        <div class="download-row">
+            <button class="secondary-btn download-report-btn" type="button" data-report-type="correspondent">Download PDF Report</button>
+        </div>
+    </section>
+</div>
+
+<script>
+    async function loadStudents() {
+        const response = await fetch('/api/students');
+        const students = await response.json();
+        const select = document.getElementById('student-select');
+        select.innerHTML = students.map((student) => 
+            `<option value="${student.name}">${student.name}</option>`
+        ).join('');
+
+        if (students.length) {
+            const first = students[0].name;
+            select.value = first;
+            await loadStudentReport(first);
+        }
+    }
+
+    async function loadTeachers() {
+        const response = await fetch('/api/teachers');
+        const teachers = await response.json();
+        const select = document.getElementById('teacher-select');
+        select.innerHTML = teachers.map((teacher) => 
+            `<option value="${teacher.name}">${teacher.name}</option>`
+        ).join('');
+
+        if (teachers.length) {
+            const first = teachers[0].name;
+            select.value = first;
+            await loadTeacherReport(first);
+        }
+    }
+
+    function parsePercent(value) {
+        const numeric = Number(String(value).replace('%', ''));
+        return Number.isFinite(numeric) ? numeric : 0;
+    }
+
+    function setBarHeight(elementId, percent) {
+        const el = document.getElementById(elementId);
+        if (!el) return;
+        el.style.height = `${Math.max(0, Math.min(100, parsePercent(percent)))}%`;
+    }
+
+    function setBarLabel(elementId, text) {
+        const el = document.getElementById(elementId);
+        if (el) el.textContent = text;
+    }
+
+    function setDonut(elementId, labelId, value, color = 'var(--green)') {
+        const percent = Math.max(0, Math.min(100, parsePercent(value)));
+        const donut = document.getElementById(elementId);
+        const label = document.getElementById(labelId);
+        if (donut) {
+            donut.style.background = `conic-gradient(${color} 0 ${percent}%, #b4dcb8 ${percent}% 100%)`;
+        }
+        if (label) label.textContent = `${percent}%`;
+    }
+
+    async function loadStudentReport(studentName) {
+        const response = await fetch(`/api/student-report?name=${encodeURIComponent(studentName)}`);
+        const data = await response.json();
+
+        document.getElementById('student-name').textContent = data.name;
+        document.getElementById('student-class').textContent = data.class;
+        document.getElementById('student-attendance').textContent = data.attendance;
+        document.getElementById('student-accuracy').textContent = data.accuracy;
+        document.getElementById('student-extracurricular').textContent = data.extracurricular;
+        document.getElementById('student-gap-label').textContent = data.gap;
+        document.getElementById('student-summary').textContent = data.summary;
+        setDonut('student-gap-donut', 'student-gap-label', data.gap, 'var(--orange)');
+        setDonut('student-attendance-donut', 'student-attendance-label', data.attendance);
+    }
+
+    async function loadTeacherReport(teacherName) {
+        const response = await fetch(`/api/teacher-report?name=${encodeURIComponent(teacherName)}`);
+        const data = await response.json();
+
+        document.getElementById('teacher-name').textContent = data.name;
+        document.getElementById('teacher-subject').textContent = data.subject;
+        document.getElementById('teacher-accuracy').textContent = data.accuracy;
+        document.getElementById('teacher-summary').textContent = data.summary;
+        setDonut('teacher-accuracy-donut', 'teacher-accuracy-label', data.accuracy, 'var(--orange)');
+        const attendanceCard = document.getElementById('teacher-attendance-card');
+        if (data.attendance) {
+            attendanceCard.classList.remove('hidden');
+            setDonut('teacher-attendance-donut', 'teacher-attendance-label', data.attendance);
+        } else {
+            attendanceCard.classList.add('hidden');
+        }
+    }
+
+    async function loadSchoolReport() {
+        const response = await fetch('/api/school-report');
+        const data = await response.json();
+
+        document.getElementById('overall-attendance-value').textContent = data.overall_attendance || '0%';
+        document.getElementById('overall-accuracy-value').textContent = data.overall_accuracy || '0%';
+        document.getElementById('system-gaps-value').textContent = data.system_gaps ?? 0;
+        document.getElementById('teacher-gaps-pill').textContent = `Teachers below 70%: ${data.teacher_gaps ?? 0}`;
+        document.getElementById('student-gaps-pill').textContent = `Students below 70%: ${data.student_gaps ?? 0}`;
+
+        const classValues = Array.isArray(data.class_performance) ? data.class_performance : [];
+        const subjectValues = Array.isArray(data.subject_performance) ? data.subject_performance : [];
+
+        classValues.slice(0, 3).forEach((item, index) => {
+            const key = `class-bar-${index + 1}`;
+            const labelKey = `class-bar-label-${index + 1}`;
+            setBarHeight(key, parsePercent(item.value || 0));
+            setBarLabel(labelKey, `${item.label || `Class ${index + 1}`} - ${item.value}%`);
+        });
+
+        subjectValues.slice(0, 3).forEach((item, index) => {
+            const key = `subject-bar-${index + 1}`;
+            const labelKey = `subject-bar-label-${index + 1}`;
+            setBarHeight(key, parsePercent(item.value || 0));
+            setBarLabel(labelKey, `${item.label || `Subject ${index + 1}`} - ${item.value}%`);
+        });
+
+        if (data.overall_accuracy) {
+            document.getElementById('school-summary-text').textContent = `Overall academic performance is ${data.overall_accuracy} across the school. Attendance is ${data.overall_attendance}.`;
+        }
+    }
+
+    function setActiveTab(tabName) {
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach((tab) => {
+            tab.classList.toggle('active', tab.dataset.tab === tabName);
+        });
+
+        const panels = {
+            student: document.getElementById('student-panel'),
+            teacher: document.getElementById('teacher-panel'),
+            correspondent: document.getElementById('correspondent-panel')
+        };
+
+        Object.entries(panels).forEach(([key, panel]) => {
+            panel.classList.toggle('hidden', key !== tabName);
+        });
+    }
+
+    document.querySelectorAll('.tab').forEach((tab) => {
+        tab.addEventListener('click', () => setActiveTab(tab.dataset.tab));
+    });
+
+    document.querySelector('[data-type="student"]').addEventListener('click', async () => {
+        const studentName = document.getElementById('student-select').value;
+        await loadStudentReport(studentName);
+    });
+
+    document.querySelector('[data-type="teacher"]').addEventListener('click', async () => {
+        const teacherName = document.getElementById('teacher-select').value;
+        await loadTeacherReport(teacherName);
+    });
+
+    document.querySelectorAll('.download-report-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+            const reportType = button.dataset.reportType;
+            const params = new URLSearchParams({ report_type: reportType });
+            if (reportType === 'student') {
+                params.set('name', document.getElementById('student-select').value);
+            }
+            if (reportType === 'teacher') {
+                params.set('name', document.getElementById('teacher-select').value);
+            }
+            window.location.href = `/api/download-report?${params.toString()}`;
+        });
+    });
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        setActiveTab('student');
+        await loadStudents();
+        await loadTeachers();
+        await loadSchoolReport();
+    });
+</script>
+{% endblock %}
