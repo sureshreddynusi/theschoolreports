@@ -161,3 +161,18 @@ Invoke-WebRequest "http://127.0.0.1:5000/api/download-report?report_type=student
 ```
 
 The downloaded file should be a PDF document and begin with the PDF file signature `%PDF-`.
+
+
+###The screenshots from the application:
+##Student Report
+<img width="1920" height="959" alt="image" src="https://github.com/user-attachments/assets/72828901-1b3b-40ee-a332-9f036f6fab38" />
+
+##Teacher Report
+<img width="1896" height="959" alt="image" src="https://github.com/user-attachments/assets/121b7377-0fbe-4aef-9ff0-08bc6b287c5b" />
+
+##Correspondent Report
+<img width="1897" height="957" alt="image" src="https://github.com/user-attachments/assets/2c908517-dc1f-4e45-8e95-f7cfcf3b4db7" />
+
+
+
+
